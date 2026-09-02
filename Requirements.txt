@@ -1,0 +1,54 @@
+# =====================================================================
+# AI Meeting Assistant - requirements.txt
+# Stack: Streamlit UI | YouTube/file audio -> local Whisper -> Hindi->EN
+#        translation | LangChain LCEL + Mistral API (summary/action items)
+#        | ChromaDB + HuggingFace embeddings (RAG chat) | PDF/TXT export
+# Versions verified against PyPI as of July 2026.
+# =====================================================================
+ 
+# ---- UI ----
+streamlit>=1.60.0
+ 
+# ---- Audio input: YouTube download + audio handling ----
+yt-dlp>=2026.7.4
+pydub>=0.25.1
+# NOTE: yt-dlp and pydub both shell out to the ffmpeg binary.
+# Install ffmpeg separately (it is NOT a pip package):
+#   Ubuntu/Debian: sudo apt install ffmpeg
+#   macOS:         brew install ffmpeg
+#   Windows:       choco install ffmpeg  (or download from ffmpeg.org)
+ 
+# ---- Local speech-to-text (Whisper) ----
+openai-whisper==20240930
+torch>=2.13.0
+# NOTE: plain `pip install torch` gives you a CPU build on most setups.
+# For GPU/CUDA acceleration (much faster transcription), instead install
+# torch using the command generated at https://pytorch.org/get-started/locally/
+# for your CUDA version, then remove the torch line above.
+ 
+# ---- Hindi -> English translation ----
+deep-translator>=1.11.4
+# Whisper's own `result["language"]` field already tells you the detected
+# source language, so you don't need a separate language-detection package
+# to decide "if needed" - only deep-translator for the actual translation step.
+ 
+# ---- LangChain (LCEL) + Mistral LLM ----
+langchain>=1.3.14
+langchain-core>=1.5.1
+langchain-community>=0.4.2
+langchain-mistralai>=1.1.6
+ 
+# ---- RAG: vector store + embeddings ----
+chromadb>=1.5.9
+langchain-chroma>=1.1.0
+langchain-huggingface>=1.2.2
+sentence-transformers>=5.6.1
+ 
+# ---- Export: PDF / TXT ----
+fpdf2>=2.8.7
+# TXT export needs no extra package (Python's built-in file I/O handles it).
+ 
+# ---- Utilities ----
+python-dotenv>=1.2.2
+numpy>=1.26.4
+requests>=2.34.2
