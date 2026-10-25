@@ -19,6 +19,7 @@ pydub>=0.25.1
 #   Windows:       choco install ffmpeg  (or download from ffmpeg.org)
  
 # ---- Local speech-to-text (Whisper) ----
+setuptools
 openai-whisper==20240930
 torch>=2.13.0
 # NOTE: plain `pip install torch` gives you a CPU build on most setups.
