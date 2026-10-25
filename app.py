@@ -27,7 +27,10 @@ import streamlit as st
 # ── Backend pipeline ────────────────────────────────────────────────────
 # ⚠️ Update this import to match your project structure. Backend logic
 # itself is untouched — this file only calls these two functions.
-from main import run_pipeline, ask_question
+try:
+    from main import run_pipeline, ask_question
+except ImportError:
+    st.error("Backend functions run_pipeline / ask_question couldn't be imported...")
 
 
 # ── Page config ──────────────────────────────────────────────────────────
